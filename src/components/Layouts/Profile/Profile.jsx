@@ -7,12 +7,8 @@ import Error from '../../../components/Reusable/Error';
 
 const Profile = () => {
   const { profile } = useParams();
-  const [theprofile, settheprofile] = useState();
   const [user, setUser] = useState(null);
   const [loading, setloading] = useState(true);
-  useEffect(() => {
-    settheprofile(profile);
-  }, []);
   useEffect(() => {
     db.collection('users')
       .where('userName', '==', profile)
@@ -33,8 +29,6 @@ const Profile = () => {
         console.log('Error getting documents: ', error);
       });
   }, [profile]);
-  console.log(profile);
-  console.log(user);
   return (
     <>
       {!loading && (

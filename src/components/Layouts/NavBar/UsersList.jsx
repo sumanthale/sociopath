@@ -39,59 +39,64 @@ export default class UsersList extends Component {
 
   render() {
     return (
-      <div className="search-feild container-fluid">
-        <div className="d-flex flex-column align-items-center">
-          <input
-            className="form-control mb-1"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-            value={this.state.searchInput}
-            onChange={this.handelChange}
-            id="search-inp"
-          />
-          <div className="pointer "></div>
-          <div className="user-search shadow">
-            <ul className="list-group container">
-              {searchUsers.length > 0 ? (
-                searchUsers.map((el) => {
-                  return (
-                    <li
-                      className="list-group-item d-flex px-5"
-                      key={el.userName}
-                    >
-                      <img
-                        src={el.imageUrl}
-                        className="mr-3 rounded-circle shadow"
-                        alt={el.userName}
-                        width="50px"
-                        height="50px"
-                      />
-                      <div className="">
-                        <Link
-                          className="h5"
-                          to={el.userName}
-                          onClick={this.props.setSearch}
+      <div className="outer-feild" onClick={this.props.setSearch}>
+        <div
+          className="search-feild"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <div className="container-fluid">
+            <div className="d-flex flex-column align-items-center">
+              <input
+                className="form-control mb-1"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                value={this.state.searchInput}
+                onChange={this.handelChange}
+                id="search-inp"
+              />
+              <div className="pointer "></div>
+              <div className="user-search shadow">
+                <ul className="list-group container">
+                  {searchUsers.length > 0 ? (
+                    searchUsers.map((el) => {
+                      return (
+                        <li
+                          className="list-group-item d-flex px-5"
+                          key={el.userName}
                         >
-                          {el.userName}
-                        </Link>
-                        <br />
-                        {el.firstName} {el.lastName}
-                      </div>
-                    </li>
-                  );
-                })
-              ) : (
-                <li className="list-group-item text-center">Search</li>
-              )}
-            </ul>
+                          <img
+                            src={el.imageUrl}
+                            className="mr-3 rounded-circle shadow"
+                            alt={el.userName}
+                            width="50px"
+                            height="50px"
+                          />
+                          <div className="">
+                            <a
+                              className="h5"
+                              href={el.userName}
+                              // target="_blank"
+                              onClick={this.props.setSearch}
+                              // rel="noreferrer"
+                            >
+                              {el.userName}
+                            </a>
+                            <br />
+                            {el.firstName} {el.lastName}
+                          </div>
+                        </li>
+                      );
+                    })
+                  ) : (
+                    <li className="list-group-item text-center">Search</li>
+                  )}
+                </ul>
+              </div>
+            </div>
           </div>
-          <button
-            className="btn btn-outline-light btn-block mt-3"
-            onClick={this.props.setSearch}
-          >
-            close
-          </button>
         </div>
       </div>
     );

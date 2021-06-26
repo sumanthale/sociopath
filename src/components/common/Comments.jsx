@@ -78,7 +78,11 @@ export class Comments extends Component {
     });
   };
   componentWillUnmount() {
-    unsub();
+    console.log('unsub');
+    console.log(unsub);
+    if (unsub) {
+      unsub();
+    }
   }
   render() {
     const { loading, comments } = this.state;
