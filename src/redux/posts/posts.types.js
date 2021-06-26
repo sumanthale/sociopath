@@ -1,0 +1,10 @@
+const UserActionTypes = {
+  ADD_POST: 'ADD_POST',
+  UPDATE_POST: 'UPDATE_POST',
+  DELETE_POST: 'DELETE_POST',
+  ADD_COMMENT: 'ADD_COMMENT',
+  GET_ALL_POSTS: 'GET_ALL_POSTS',
+  GET_SINGLE_POST: 'GET_SINGLE_POST',
+};
+
+export default UserActionTypes;

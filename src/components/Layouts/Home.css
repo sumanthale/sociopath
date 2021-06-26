@@ -1,0 +1,13 @@
+.Home {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: whitesmoke;
+}
+.Home__col-1 {
+  display: flex;
+  align-items: center;
+}
+.Home__col-2 {
+  min-height: 20rem;
+}

@@ -1,0 +1,15 @@
+  //   const handelClick = () => {
+  //     if (file) {
+  //         const metadata = {
+  //           contentType: image.type,
+  //         };
+  //         const storageRef = appStore.ref();
+  //       const uploadTask = storageRef
+  //         .child('images/mountains.jpg')
+  //         .put(file, metadata);
+  //         uploadTask.then(snapshot => {
+
+  //         })
+  //         uploadTask.on()
+
+  //     }
