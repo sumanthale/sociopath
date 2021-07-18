@@ -57,44 +57,56 @@ export default class UsersList extends Component {
                 onChange={this.handelChange}
                 id="search-inp"
               />
-              <div className="pointer "></div>
-              <div className="user-search shadow">
-                <ul className="list-group container">
-                  {searchUsers.length > 0 ? (
-                    searchUsers.map((el) => {
-                      return (
+              {/* <div className="pointer"></div> */}
+              {this.state.searchInput && (
+                <div className="user-search shadow mt-3">
+                  <ul className="list-group container">
+                    {searchUsers.length > 0 ? (
+                      searchUsers.map((el) => {
+                        return (
+                          <li
+                            className="list-group-item d-flex px-5"
+                            key={el.userName}
+                          >
+                            <img
+                              src={el.imageUrl}
+                              className="mr-3 rounded-circle shadow"
+                              alt={el.userName}
+                              width="50px"
+                              height="50px"
+                            />
+                            <div className="">
+                              <a
+                                className="h5"
+                                href={el.userName}
+                                // target="_blank"
+                                onClick={this.props.setSearch}
+                                // rel="noreferrer"
+                              >
+                                {el.userName}
+                              </a>
+                              <br />
+                              {el.firstName} {el.lastName}
+                            </div>
+                          </li>
+                        );
+                      })
+                    ) : (
+                      <>
                         <li
-                          className="list-group-item d-flex px-5"
-                          key={el.userName}
+                          className="list-group-item d-flex justify-content-center align-items-center text-white"
+                          style={{
+                            height: '200px',
+                            backgroundColor: '#00000083',
+                          }}
                         >
-                          <img
-                            src={el.imageUrl}
-                            className="mr-3 rounded-circle shadow"
-                            alt={el.userName}
-                            width="50px"
-                            height="50px"
-                          />
-                          <div className="">
-                            <a
-                              className="h5"
-                              href={el.userName}
-                              // target="_blank"
-                              onClick={this.props.setSearch}
-                              // rel="noreferrer"
-                            >
-                              {el.userName}
-                            </a>
-                            <br />
-                            {el.firstName} {el.lastName}
-                          </div>
+                          No User Found !
                         </li>
-                      );
-                    })
-                  ) : (
-                    <li className="list-group-item text-center">Search</li>
-                  )}
-                </ul>
-              </div>
+                      </>
+                    )}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </div>

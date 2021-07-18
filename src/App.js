@@ -12,6 +12,8 @@ import ForgotPassword from './components/Login/ForgotPassword';
 import Profile from './components/Layouts/Profile/Profile';
 import NavBar from './components/Layouts/NavBar/NavBar';
 import Error from './components/Reusable/Error';
+import { Toaster } from 'react-hot-toast';
+import Notifications from './components/Layouts/Notifications';
 
 class App extends Component {
   componentDidMount() {
@@ -28,6 +30,9 @@ class App extends Component {
     const { user, loading } = this.props;
     return (
       <>
+        <div>
+          <Toaster />
+        </div>
         {user && (
           <div style={{ height: '6rem' }}>
             <NavBar />
@@ -41,12 +46,17 @@ class App extends Component {
             <Route exact path="/register">
               {user ? <Redirect to="/" /> : <LandingPage />}
             </Route>
-            <CustomRoute exact path="/" component={Home} />
-            <CustomRoute exact path="/:profile" component={Profile} />
-
             <Route exact path="/forgot-password">
               <ForgotPassword />
             </Route>
+            <CustomRoute exact path="/" component={Home} />
+            <CustomRoute
+              exact
+              path="/notifications"
+              component={Notifications}
+            />
+            <CustomRoute exact path="/:profile" component={Profile} />
+
             <Route path="**" render={() => <Error />} />
           </Switch>
         )}

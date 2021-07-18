@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { db } from '../../firebase/firebase';
-import { getAllPosts } from '../../redux/posts/posts.actions';
 import Post from './Post';
 let unsubscribe;
 class Posts extends Component {
@@ -10,21 +9,21 @@ class Posts extends Component {
   componentDidMount() {
     unsubscribe = db
       .collection('posts')
-      .orderBy('time', 'desc')
+      .orderBy('time', 'asc')
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === 'added') {
-            console.log('Added : ', change.doc.data());
+            // console.log('Added : ', change.doc.data());
 
             this.setState({
               posts: [
-                ...this.state.posts,
                 { ...change.doc.data(), id: change.doc.id },
+                ...this.state.posts,
               ],
             });
           }
           if (change.type === 'modified') {
-            console.log('Modified : ', change.doc.data());
+            // console.log('Modified : ', change.doc.data());
 
             const filter = this.state.posts.map((doc) => {
               if (doc.id === change.doc.id) {
@@ -39,7 +38,7 @@ class Posts extends Component {
               (doc) => doc.id !== change.doc.id
             );
             this.setState({ posts: filter });
-            console.log('Removed : ', change.doc.data());
+            // console.log('Removed : ', change.doc.data());
           }
         });
       });
@@ -50,7 +49,6 @@ class Posts extends Component {
     }
   }
   render() {
-    console.log(this.state.posts);
     return (
       <div>
         {this.state.posts.map((post) => (

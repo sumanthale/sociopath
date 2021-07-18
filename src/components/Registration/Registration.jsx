@@ -25,10 +25,12 @@ class Registration extends Component {
     const { error, history } = this.props;
     return (
       <div className="container ">
-        <h3 className="text-primary">SocioPath</h3>
-        <h1 className="font-weight-bold">Welcome to Family</h1>
+        <h1 className="text-danger font-weight-bolder display-4">
+          Ask Osmanian.
+        </h1>
+        <h2 className="font-weight-bold">Welcome to Family</h2>
         <p className="text-muted ">
-          SocioPath platform to ask questions and connect with people who
+          Ask Osmanian platform to ask questions and connect with people who
           contribute unique insights and quality answers.
         </p>
         {error && <div className="alert alert-danger">{error}</div>}
@@ -96,9 +98,13 @@ const DIV = styled.div`
   border-radius: 20px 20px 0 0;
 `;
 const ButtonGroup = styled.div`
-  margin-top: 20px;
+  margin-top: 5px;
   display: flex;
   justify-content: space-between;
+  @media only screen and (max-width: 440px) {
+    flex-direction: column;
+    width: fit-content;
+  }
 `;
 const StyledButton = styled.button`
   background-color: ${(props) => (props.color ? props.color : 'white')};
@@ -108,4 +114,7 @@ const StyledButton = styled.button`
   padding: 0.8rem 1.8rem;
   font-weight: bold;
   margin: 10px;
+  @media only screen and (max-width: 440px) {
+    width: 200px;
+  }
 `;

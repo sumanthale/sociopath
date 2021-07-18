@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import { appStore, auth, db } from '../../firebase/firebase';
+import striptags from 'striptags';
 function PostQuestion() {
   const [value, setValue] = useState('');
   const [file, setFile] = useState(null);
@@ -11,13 +12,21 @@ function PostQuestion() {
     setImage(event.target.files[0]);
     setFile(URL.createObjectURL(event.target.files[0]));
   };
-
   const verify = () => {
-    if (value === '<p><br></p>' || value === '') return false;
+    if (striptags(value).trim().length <= 0) return false;
     return true;
   };
 
-  const handleUpload = () => {
+  const handleUpload = (e) => {
+    e.preventDefault();
+    if (file && image) {
+      uploadWithImage();
+    } else {
+      uploadWithOutImage();
+    }
+  };
+
+  const uploadWithImage = () => {
     const name = image.name + new Date().toISOString();
     const uploadTask = appStore.ref(`images/${name}`).put(image);
     uploadTask.on(
@@ -53,6 +62,7 @@ function PostQuestion() {
                 setValue('');
                 setImage(null);
                 setProgress(0);
+                document.getElementById('ask-file').value = '';
               })
               .catch((err) => {
                 console.log(err);
@@ -61,22 +71,54 @@ function PostQuestion() {
       }
     );
   };
+  const uploadWithOutImage = () => {
+    db.collection('posts')
+      .add({
+        likes: [],
+        text: value,
+        time: new Date(),
+        user: auth.currentUser.email,
+        userName: auth.currentUser.email.split('@')[0],
+      })
+      .then((snap) => {
+        console.log(snap);
+        setValue('');
+        document.getElementById('ask-file').value = '';
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div>
       {file && (
         <img src={file} height="100px" className="img-thumbnail" alt="" />
       )}
       <ReactQuill value={value} onChange={setValue} />
-      <div className="mt-3">
-        <input type="file" onChange={handleChange} className="form-control" />
-      </div>
-      <button
-        className="btn btn-outline-primary btn-block mt-3"
-        disabled={!verify()}
-        onClick={handleUpload}
-      >
-        Ask Now
-      </button>
+
+      <form onSubmit={handleUpload} className="d-flex">
+        <div className="mt-3 mr-3">
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              onChange={handleChange}
+              id="ask-file"
+            />
+            <label className="custom-file-label" htmlFor="ask-file">
+              Choose file
+            </label>
+          </div>
+        </div>
+        <button
+          className="btn btn-outline-dark btn-block mt-3"
+          disabled={!verify()}
+          type="submit"
+        >
+          Ask Now
+        </button>
+      </form>
+
       {progress > 0 && (
         <div className="progress mt-2" style={{ height: '.5rem' }}>
           <div
@@ -90,21 +132,3 @@ function PostQuestion() {
   );
 }
 export default PostQuestion;
-
-//   componentDidMount() {
-//     ref
-//       .child('images/WhatsApp Image 2021-04-18 at 1.49.03 PM.jpeg')
-//       .getDownloadURL()
-//       .then((url) => {
-//         this.setState({ file: url });
-//         console.log(url);
-//       });
-//   }
-
-// ref.child('images/')
-// const rref = ref
-//   .child('images/mountains.jpg')
-//   .getDownloadURL()
-//   .then((res) => {
-//     console.log(res);
-//   });

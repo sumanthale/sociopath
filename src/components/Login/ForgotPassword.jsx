@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { auth } from '../../firebase/firebase';
-
+import { Link } from 'react-router-dom';
 const ForgotPassword = () => {
   const [sent, setSent] = useState(false);
   const [mail, setMail] = useState('');
@@ -56,9 +56,9 @@ const ForgotPassword = () => {
               </button>
             </div>
             <div className="col-md-6">
-              <button className="btn btn-dark btn-block" type="submit">
-                Get Login
-              </button>
+              <Link className="btn btn-dark btn-block" to="/login">
+                Go Back
+              </Link>
             </div>
           </div>
         </form>

@@ -18,7 +18,6 @@ class Login extends Component {
   };
   handelSubmit = (e) => {
     const { signIn } = this.props;
-    console.log('handel');
     e.preventDefault();
     signIn(this.state);
   };
@@ -26,15 +25,17 @@ class Login extends Component {
   render() {
     const { error, history } = this.props;
     return (
-      <div className="container ">
-        <h3 className="text-primary">SocioPath</h3>
-        <h1 className="font-weight-bold">Welcome Back :)</h1>
+      <div className="container">
+        <h2 className="text-danger font-weight-bolder display-4">
+          Ask Osmanian.
+        </h2>
+        <h2 className="font-weight-bold">Welcome Back :)</h2>
         <p className="text-muted ">
           To Keep connected with us pleaase login with your personal information
           by email address and password
         </p>
         <Form
-          className="w-100 d-flex flex-column align-items-center mt-5"
+          className="w-100 d-flex flex-column align-items-center mt-4"
           onSubmit={this.handelSubmit}
         >
           {error && <div className="alert alert-danger">{error}</div>}
@@ -91,9 +92,12 @@ const DIV = styled.div`
   align-items: center;
 `;
 const ButtonGroup = styled.div`
-  margin-top: 20px;
+  margin-top: 5px;
   display: flex;
   justify-content: space-between;
+  @media only screen and (max-width: 440px) {
+    flex-direction: column;
+  }
 `;
 const StyledButton = styled.button`
   background-color: ${(props) => (props.color ? props.color : 'white')};
@@ -103,4 +107,7 @@ const StyledButton = styled.button`
   padding: 0.8rem 1.8rem;
   font-weight: bold;
   margin: 10px;
+  @media only screen and (max-width: 440px) {
+    width: 200px;
+  }
 `;

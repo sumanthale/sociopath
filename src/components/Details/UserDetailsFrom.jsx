@@ -13,6 +13,7 @@ class UserDetailsFrom extends Component {
     verifyEmail: false,
     userFromDB: false,
     progress: 0,
+    error: null,
   };
 
   async componentDidMount() {
@@ -93,11 +94,14 @@ class UserDetailsFrom extends Component {
   render() {
     return (
       <div className="container">
-        {this.state.userFromDB &&
+        {!!this.state.error ? (
+          <div className="alert alert-danger">{this.state.error.message}</div>
+        ) : (
+          this.state.userFromDB &&
           !auth.currentUser.emailVerified &&
           (!this.state.verifyEmail ? (
             <div className="alert alert-danger text-center">
-              Please Verify Your Email {auth.currentUser.email} &nbsp; &nbsp;
+              Click to Verify Your Email {auth.currentUser.email} &nbsp; &nbsp;
               <button
                 className="btn btn-success"
                 onClick={() => {
@@ -109,7 +113,9 @@ class UserDetailsFrom extends Component {
                       });
                     })
                     .catch((err) => {
-                      console.log(err);
+                      this.setState({
+                        error: err,
+                      });
                     });
                 }}
               >
@@ -129,7 +135,8 @@ class UserDetailsFrom extends Component {
                 Verified
               </button>
             </div>
-          ))}
+          ))
+        )}
 
         <form onSubmit={this.handleUpload}>
           <div className="preview  text-center ">

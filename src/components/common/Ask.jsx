@@ -1,13 +1,21 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { auth } from '../../firebase/firebase';
 import PostQuestion from './PostQuestion';
 
 const Ask = () => {
+  const state = useSelector((state) => state.user.loggedInUser);
+  console.log(state);
+
   return (
     <div className="card">
-      <h5 className="card-header">
+      <h5 className="card-header d-flex align-items-center">
         <img
-          src="https://images.unsplash.com/photo-1593720219276-0b1eacd0aef4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1043&q=80"
+          src={
+            state
+              ? state.imageUrl
+              : 'http://simpleicon.com/wp-content/uploads/account.png'
+          }
           className="mr-3"
           alt="..."
           width="50px"

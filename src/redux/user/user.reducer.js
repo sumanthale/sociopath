@@ -3,6 +3,7 @@ const INITIAL_STATE = {
   currentUser: null,
   error: null,
   loading: true,
+  loggedInUser: null,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -33,6 +34,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         currentUser: action.payload,
         error: null,
         loading: false,
+      };
+    case UserActionTypes.SET_LOGGED_IN_USER:
+      return {
+        ...state,
+        loggedInUser: action.payload,
       };
     case UserActionTypes.CLEAR_ERRORS:
       return {

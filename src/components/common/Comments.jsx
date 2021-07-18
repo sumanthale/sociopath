@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { auth, db } from '../../firebase/firebase';
 import Comment from './Comment';
 let unsub;
@@ -11,14 +12,16 @@ export class Comments extends Component {
 
   componentDidMount() {
     const { id } = this.props.data;
-    db.collection('posts')
+
+    unsub = db
+      .collection('posts')
       .doc(id)
       .collection('comments')
       .orderBy('time', 'desc')
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === 'added') {
-            console.log('Added : ', change.doc.data());
+            // console.log('Added : ', change.doc.data());
 
             this.setState({
               comments: [
@@ -28,23 +31,12 @@ export class Comments extends Component {
               loading: false,
             });
           }
-          if (change.type === 'modified') {
-            console.log('Modified : ', change.doc.data());
 
-            const filter = this.state.comments.map((doc) => {
-              if (doc.id === change.doc.id) {
-                return { ...change.doc.data(), id: doc.id };
-              }
-              return doc;
-            });
-            this.setState({ comments: filter, loading: false });
-          }
           if (change.type === 'removed') {
             const filter = this.state.comments.filter(
               (doc) => doc.id !== change.doc.id
             );
             this.setState({ comments: filter, loading: false });
-            console.log('Removed : ', change.doc.data());
           }
         });
         this.setState({
@@ -78,14 +70,13 @@ export class Comments extends Component {
     });
   };
   componentWillUnmount() {
-    console.log('unsub');
-    console.log(unsub);
     if (unsub) {
       unsub();
     }
   }
   render() {
     const { loading, comments } = this.state;
+
     return (
       <div className="p-3">
         <form
@@ -94,8 +85,9 @@ export class Comments extends Component {
         >
           <img
             src={
-              this.props.image ||
-              'http://simpleicon.com/wp-content/uploads/account.png'
+              this.props.loggedinUser
+                ? this.props.loggedinUser.imageUrl
+                : 'http://simpleicon.com/wp-content/uploads/account.png'
             }
             alt="..."
             width="30px"
@@ -104,7 +96,7 @@ export class Comments extends Component {
           />
           <textarea
             className="form-control mx-3"
-            rows="1"
+            rows="2"
             required
             value={this.state.comment}
             onChange={this.handelChange}
@@ -128,7 +120,11 @@ export class Comments extends Component {
                   Recent comments
                 </h6>
                 {comments.map((comment) => (
-                  <Comment key={comment.id} data={comment} />
+                  <Comment
+                    key={comment.id}
+                    data={comment}
+                    post={this.props.data}
+                  />
                 ))}
               </>
             ) : (
@@ -145,4 +141,8 @@ export class Comments extends Component {
   }
 }
 
-export default Comments;
+const mapStateToProps = ({ user }) => ({
+  loggedinUser: user.loggedInUser,
+});
+
+export default connect(mapStateToProps)(Comments);

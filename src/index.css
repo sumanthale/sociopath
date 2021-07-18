@@ -8,6 +8,7 @@
 
 body {
   box-sizing: border-box;
+  /* filter: invert(); */
 }
 
 .sidebar {
@@ -99,10 +100,106 @@ body {
 .user-search {
   width: 100%;
   border-radius: 6px;
-  height: 250px;
+  height: 300px;
   overflow-x: hidden;
   overflow-y: auto;
 }
 .user-search::-webkit-scrollbar {
   display: none;
+}
+.ellipsis {
+  text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.navSideBar,
+.navSideBar_level_1 {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.596);
+
+  z-index: 9998;
+  top: 11.8%;
+  transform: translateX(-100%);
+
+  transition: transform 1s cubic-bezier(0.45, 0, 0.55, 1) 0.5s;
+}
+.navSideBar_level_1 {
+  background-color: transparent;
+}
+.navSideBar {
+  width: 50vw;
+}
+.navSideBar.active {
+  transform: translateX(0px);
+  -webkit-transition: transform 1s cubic-bezier(0.45, 0, 0.55, 1) 0.5s;
+  -moz-transition: transform 1s cubic-bezier(0.45, 0, 0.55, 1) 0.5s;
+  -o-transition: transform 1s cubic-bezier(0.45, 0, 0.55, 1) 0.5s;
+  -ms-transition: transform 1s cubic-bezier(0.45, 0, 0.55, 1) 0.5s;
+  transition: transform 1s cubic-bezier(0.45, 0, 0.55, 1) 0.5s;
+}
+.navSideBar_level_1.active {
+  transform: translateX(0px);
+  -webkit-transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1) 0.4s;
+  -moz-transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1) 0.4s;
+  -o-transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1) 0.4s;
+  -ms-transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1) 0.4s;
+  transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1) 0.4s;
+}
+
+.double_like {
+  position: relative;
+}
+.double_like-one {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.double_like-one img {
+  width: 100px;
+  height: 100px;
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity: 0.9;
+  transition: all 0.7s cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.double_like-one img.active {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+  transition: all 0.7s cubic-bezier(0.45, 0, 0.55, 1);
+}
+.notification {
+  position: relative;
+}
+.notification_level_l {
+  color: red;
+  position: absolute;
+  top: 0px;
+}
+.sidebar-main li {
+  letter-spacing: 1px;
+  position: relative;
+  cursor: pointer;
+  background-color: white;
+  width: 100%;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+}
+
+.sidebar-main li:hover:after {
+  content: '';
+  height: 3px;
+  width: 100%;
+  background-color: red;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
 }

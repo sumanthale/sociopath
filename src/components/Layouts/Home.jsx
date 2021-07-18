@@ -9,7 +9,6 @@ const Home = () => {
   const [render, SetRender] = useState('');
   useEffect(() => {
     if (auth.currentUser.emailVerified) {
-      console.log('haha');
       SetRender(view);
     } else {
       SetRender(userInfo);
@@ -17,12 +16,12 @@ const Home = () => {
     setLoading(false);
   }, []);
   const view = (
-    <div className="row container-fluid">
-      <div className="col-md-3 d-none d-md-block">
+    <div className="row ">
+      <div className="col-sm-2 col-md-3 d-none d-sm-block">
         <SideBar />
       </div>
 
-      <div className="col-md-9 col-lg-6">
+      <div className="col-sm-10 col-md-9 col-lg-6">
         <MainFeed />
       </div>
       <div className="col-lg-3 d-none d-lg-block">

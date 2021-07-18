@@ -9,7 +9,7 @@ const SideBar = () => {
           <li className="nav-item">
             <Link className="nav-link active" to="#">
               <span data-feather="home"></span>
-              Dashboard <span className="sr-only">(current)</span>
+              Menu <span className="sr-only">(current)</span>
             </Link>
           </li>
           {/* <li className="nav-item">

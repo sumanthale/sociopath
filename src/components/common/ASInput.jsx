@@ -34,6 +34,11 @@ const DIV = styled.div`
   :hover {
     border-bottom: 2px solid #007bff;
   }
+  @media only screen and (max-width: 440px) {
+    min-width: 300px;
+    height: 70px;
+    margin-bottom: 10px;
+  }
 `;
 const Icon = styled.div`
   width: 50px;
@@ -51,4 +56,8 @@ const SInput = styled.input`
   font-size: 16px;
   outline: none;
   caret-color: #007bff;
+  @media only screen and (max-width: 440px) {
+    min-width: 200px;
+    height: 40px;
+  }
 `;

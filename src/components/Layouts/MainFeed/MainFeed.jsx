@@ -4,7 +4,7 @@ import Posts from '../../common/Posts';
 
 const MainFeed = () => {
   return (
-    <div className="container-fluid">
+    <div className="">
       <Ask />
       <Posts />
     </div>
